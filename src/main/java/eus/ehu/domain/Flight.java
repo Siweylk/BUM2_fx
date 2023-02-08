@@ -69,13 +69,25 @@ public class Flight {
 	}
 
 
-	public ArrayList<ConcreteFlight> getConcreteFlights(Date date) {
+	public ArrayList<ConcreteFlight> getConcreteFlights(Date date, int mode, int cantidad) {
 		ArrayList<ConcreteFlight> lInDate = new ArrayList<ConcreteFlight>();
 		for (ConcreteFlight cfl : concreteFlights) {
-			if (date.equals(cfl.getDate()))
+			if (date.equals(cfl.getDate()) && this.flightmode(cfl, mode, cantidad))
 				lInDate.add(cfl);
 		}
 		return lInDate;
+	}
+
+	public boolean flightmode(ConcreteFlight flight ,int mode, int cantidad){
+		switch (mode){
+			case 1:
+				return flight.getFreeEconomySeatNo() >= cantidad;
+			case 2:
+				return flight.getFreeFirstSeatNo() >= cantidad;
+			case 3:
+				return flight.getFreeBusinessSeatNo() >= cantidad;
+		}
+		return false;
 	}
 
 
